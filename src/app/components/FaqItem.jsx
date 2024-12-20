@@ -1,7 +1,6 @@
 'use client'
 import React, {useState} from 'react'
-import { SlideDown } from 'react-slidedown';
-import 'react-slidedown/lib/slidedown.css'; 
+import { motion } from 'framer-motion';
 import clsx from 'clsx';
 
 const FaqItem = ({item ,index}) => {
@@ -24,14 +23,21 @@ const FaqItem = ({item ,index}) => {
             <span className='transition-all delay-100 ease-in-out duration-1000 font-medium size-10 flex items-center text-white text-2xl justify-center rounded-full bg-[#20387C] '>{ item.id == checkId ? '-': '+'}</span>
             </div>
             </div>
-            <SlideDown>
             {
                 
-                item.id == checkId && <span className='text-[1.1em] pr-5 max-md:text-xl  tracking-wider text-white' >
-                    {item.answer}
-                </span>
-            }
-            </SlideDown>
+                item.id == checkId &&
+                <motion.div className='text-[1.1em] pr-5 max-md:text-xl  tracking-wider text-white'
+                initial={{ height: 0, opacity: 0 }}
+                animate={item.id == checkId ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
+                exit={{ height: 0, opacity: 0 }}
+                style={{ overflow: "hidden" }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                {item.answer}
+              </motion.div>
+                }
+            
+            
              </div>
     </div>
   )
